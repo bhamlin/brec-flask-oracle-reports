@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Engineer list</title>
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='engineer_list.css') }}">
+    </head>
+    <body>
+        <h2>Engineer list</h2>
+        <hr/>
+        {% if data %}
+        <table border='1'>
+            <thead>
+                <th>id</th>
+                <th>name</th>
+            </thead>
+            <tbody>
+            {% for row in data %}
+                <tr>
+                    <th>{{ row[0] }}</th>
+                    <td>{{ row[1] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class='error'>Error or no data</div>
+        {% endif %}
+    </body>
+</html>
