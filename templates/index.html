@@ -1,22 +1,17 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Report list</title>
-        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='index.css') }}">
-    </head>
-    <body>
-        <h2>Report list</h2>
-        <hr/>
+{% extends 'base.html' %}
+{% block body %}
         {% if data %}
-        <ul>
-        {% for report in data %}
-            <li>
-                <a href='{{ report }}'>{{ report }}</a>
-            </li>
+        <dl class='dl-horizontal'>
+        {% for name, data in data.items() %}
+            <dt>
+                <a href='report/{{ name }}'>{{ data.title }}</a>
+            </dt>
+            <dd>
+                <span>{{ data.desc }}</span>
+            </dd>
         {% endfor %}
-        </ul>
+        </dl>
         {% else %}
         <div class='error'>Error or no data</div>
         {% endif %}
-    </body>
-</html>
+{% endblock %}
