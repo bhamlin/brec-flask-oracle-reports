@@ -5,35 +5,19 @@ template = 'disconnect_list.html'
 query = '''
 
 SELECT
- so_master.SONO as service_order_id,
- loc.mapno as location_id,
- so_master.ACCOUNTNO as account_number,
- mtr.meterno as meter_number,
- f0002 as ResourceName,
- wtype.work_type as ORDER_TYPE,
- so_master.ORDER_STATUS,
+ so_master.SONO as service_order_id, loc.mapno as location_id,
+ so_master.ACCOUNTNO as account_number, mtr.meterno as meter_number,
+ f0002 as ResourceName, wtype.work_type as ORDER_TYPE, so_master.ORDER_STATUS,
  ATSCBS.DISCOVERER_FUNCTIONS.GET_MEMBER_NAME(acc_master.MEMBERNO) as MemberName,
  ATSCBS.DISCOVERER_FUNCTIONS.GET_SERVICE_ADDRESS(so_master.ACCOUNTNO) as Address,
- so_master.ACCOUNTNO as AccountNumber,
- so_master.COMPLETION_DATE as CompletionDate,
- so_master.CREATION_DATE as CreationDate,
- acc_master.MEMBERNO as MemberNumber,
+ so_master.ACCOUNTNO as AccountNumber, so_master.COMPLETION_DATE as CompletionDate,
+ so_master.CREATION_DATE as CreationDate, acc_master.MEMBERNO as MemberNumber,
  so_master.ORDER_STATUS as CurrentStatus
 FROM
- ( SELECT
-    ACCOUNTNO,
-    BRANCH_ID AS i151258,
-    MEMBERNO
+ ( SELECT ACCOUNTNO, BRANCH_ID AS i151258, MEMBERNO
    FROM ATSCBS.ACCOUNT_MASTER ) acc_master,
- ( SELECT
-    COMPLETION_DATE,
-    CREATION_DATE,
-    ACCOUNTNO,
-    ORDER_STATUS,
-    REQUESTED_BY AS i153527,
-    location_id,
-    SONO,
-    WORK_TYPE
+ ( SELECT COMPLETION_DATE, CREATION_DATE, ACCOUNTNO, ORDER_STATUS,
+    REQUESTED_BY AS i153527, location_id, SONO, WORK_TYPE
    FROM CISDATA.SO_MASTER ) so_master,
  ( SELECT SO_MASTER.SONO AS f0001, RESOURCE_MASTER.RES_NAME AS f0002
    FROM ATSCBS.RESOURCE_MASTER RESOURCE_MASTER, CISDATA.SO_MASTER SO_MASTER
@@ -44,7 +28,7 @@ FROM
 WHERE ((so_master.ACCOUNTNO = acc_master.ACCOUNTNO))
    and (so_master.WORK_TYPE = wtype.work_type_id(+))
    and (f0001 = so_master.SONO)
-   AND (( SYSDATE-so_master.CREATION_DATE(+) ) <= 5 )
+   AND (( SYSDATE-so_master.CREATION_DATE(+) ) <= 6 )
    and (so_master.location_id = mtr.location_id )
    and (so_master.location_id = loc.location_id )
    and (so_master.ORDER_STATUS = 'Opened')
